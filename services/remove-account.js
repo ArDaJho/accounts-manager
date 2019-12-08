@@ -1,0 +1,38 @@
+const showMessage = require('../configs/show-messages').showMessage;
+const utils = require('../utils/utils');
+const readlineSync = require('readline-sync');
+const fs = require('fs');
+const DATA_PATH = 'data/data.json';
+
+
+
+const removeAccount = (accountName) => {
+  const data = utils.getData();
+  if (utils.existsAccount(accountName)) {
+    const userAnwser = readlineSync.question( `Are you sure that you want to remove the account ${accountName}?(y/n): `);
+    if ( userAnwser.toLowerCase() == 'y') {
+
+      const indexAccount = utils.getIndexObjectByAttr(data.accounts, 'name', accountName);
+      const account = data.accounts[indexAccount];
+
+      data.accounts.splice(indexAccount, 1);
+
+      showMessage('Removing the account:...', 'error');
+      showMessage(account, 'error');
+
+      fs.writeFile(DATA_PATH, JSON.stringify(data), (error) => {
+        if (error) throw new Error('Error. Account not created');
+        showMessage('Account removed successfuly', 'success');
+      });
+    } else {
+      showMessage('Operation canceled.', 'warn');
+    }
+  } else {
+    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts', 'error');
+  }
+};
+
+
+module.exports = {
+  removeAccount
+}

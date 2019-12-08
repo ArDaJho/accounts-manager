@@ -1,0 +1,20 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "Password manager for developers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "password",
+    "manager"
+  ],
+  "author": "David Granado Jordan",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "readline-sync": "^1.4.10",
+    "yargs": "^15.0.2"
+  }
+}
