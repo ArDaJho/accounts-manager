@@ -1,5 +1,6 @@
 const readlineSync = require('readline-sync');
-const DATA_PATH = '../data/data.json';
+const path = require('path');
+const DATA_PATH = path.join(__dirname, '../data', '/data.json');
 
 
 function existsAccount(name) {
