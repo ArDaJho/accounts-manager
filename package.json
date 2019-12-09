@@ -1,6 +1,6 @@
 {
   "name": "account-manager-dj",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Accounts manager for developers",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,9 @@
   },
   "bin": {
     "am": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArDaJho/accounts-manager.git"
   }
 }
