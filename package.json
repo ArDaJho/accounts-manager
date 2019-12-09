@@ -1,13 +1,14 @@
 {
   "name": "account-manager-dj",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Accounts manager for developers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "persist-dev-data": "cp ./data/data.json data-dev/data.json && cp ./data-prod/data.json ./data/data.json",
     "return-dev-data": "cp ./data-dev/data.json data/data.json",
-    "publish-lib": "npm run persist-dev-data && npm i && npm publish --access=public && npm run return-dev-data"
+    "publish-lib": "npm run persist-dev-data && npm i && npm publish --access=public && npm run return-dev-data",
+    "unpublish": "npm unpublish account-manager-dj"
   },
   "keywords": [
     "password",
