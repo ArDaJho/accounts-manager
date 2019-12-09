@@ -11,12 +11,12 @@ $ npm i account-manager-dj -g
 $ am --help
 
 Commands:
-  $ am add     Desc: Add a new User Account
-  $ am list    Desc: List all your available Accounts
-  $ am show    Desc: Show the Account info
-  $ am remove  Desc: Remove the Account.
-  $ am update  Desc: Update the Account.
-  $ am login   Desc: Add or Update a password to access to your Accounts.
+  $ am login   -p=pass123 -t=30    Desc: Set or Update a password to access to your Accounts.
+  $ am add     -a=facebook         Desc: Add a new User Account
+  $ am list    #show all           Desc: List all your availible Accounts
+  $ am show    -a=facebook         Desc: Show the Account info
+  $ am update  -a=facebook         Desc: Update the Account.
+  $ am remove  -a=facebook         Desc: Remove the Account.
 
 Opciones:
   --version  Show version number                                [booleano]
