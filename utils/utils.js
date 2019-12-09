@@ -1,5 +1,5 @@
 const readlineSync = require('readline-sync');
-const DATA_PATH = 'data/data.json';
+const DATA_PATH = '../data/data.json';
 
 
 function existsAccount(name) {
@@ -16,7 +16,7 @@ function existsAccount(name) {
 
 function getData() {
   try {
-    return require('../'+DATA_PATH);
+    return require(DATA_PATH);
   } catch (error) {
     throw new Error('Error to read the data base, try again please');
   }
@@ -60,5 +60,6 @@ module.exports = {
   existsAccount,
   getData,
   getIndexObjectByAttr,
-  buildNewAccount
+  buildNewAccount,
+  DATA_PATH
 }

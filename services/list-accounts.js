@@ -1,4 +1,4 @@
-const showMessage = require('../configs/show-messages').showMessage;
+const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 
 

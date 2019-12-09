@@ -1,7 +1,6 @@
 const fs = require('fs');
 const readlineSync = require('readline-sync');
-const DATA_PATH = 'data/data.json';
-const showMessage = require('../configs/show-messages').showMessage;
+const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 
 const createNewUserAccount = (name) => {
@@ -28,7 +27,7 @@ const createNewUserAccount = (name) => {
           const index = utils.getIndexObjectByAttr(data.accounts, 'name', name);
           newAccount.accountNumber = data.accounts[index].accountNumber;
           data.accounts[index] = newAccount;
-          fs.writeFile(DATA_PATH, JSON.stringify(data), (error) => {
+          fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
             showMessage(`Account ${name} replaced successfuly`, 'success');
           });
@@ -46,7 +45,7 @@ const createNewUserAccount = (name) => {
           newAccount.accountNumber = data.accounts[index].accountNumber + 1;
           newAccount.name += `_${newAccount.accountNumber}`;
           data.accounts.push(newAccount);
-          fs.writeFile(DATA_PATH, JSON.stringify(data), (error) => {
+          fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
             showMessage(`Account ${name} saved successfuly`, 'success');
           });
@@ -68,7 +67,7 @@ const createNewUserAccount = (name) => {
       }
       newAccount.accountNumber = 1;
       data.accounts.push(newAccount);
-      fs.writeFile(DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage(`Account ${name} saved successfuly`, 'success');
       });

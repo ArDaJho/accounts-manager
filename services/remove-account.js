@@ -1,8 +1,7 @@
-const showMessage = require('../configs/show-messages').showMessage;
+const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const readlineSync = require('readline-sync');
 const fs = require('fs');
-const DATA_PATH = 'data/data.json';
 
 
 
@@ -18,9 +17,13 @@ const removeAccount = (accountName) => {
       data.accounts.splice(indexAccount, 1);
 
       showMessage('Removing the account:...', 'error');
-      showMessage(account, 'error');
-
-      fs.writeFile(DATA_PATH, JSON.stringify(data), (error) => {
+      for (const key in account) {
+        if (account.hasOwnProperty(key)) {
+          const value = account[key];
+          showMessage(`${key}: ${value}`, 'error');        
+        }
+      }
+      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage('Account removed successfuly', 'success');
       });
