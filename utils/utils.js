@@ -56,11 +56,22 @@ function buildNewAccount(name, callback) {
   callback(newAccount);
 }
 
+function verifyPasswordUser() {
+  const data = getData();
+  const password = readlineSync.question('Please enter your password: ');
+  if (data.login.password != password){
+    showMessage(`Incorrect Password, please try again.`, 'error');
+    return false;
+  }
+  return true;
+} 
+
 
 module.exports = {
   existsAccount,
   getData,
   getIndexObjectByAttr,
   buildNewAccount,
+  verifyPasswordUser,
   DATA_PATH
 }

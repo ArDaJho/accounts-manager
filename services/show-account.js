@@ -8,6 +8,10 @@ const showAccount = (accountName) => {
   const data = utils.getData();
   if (utils.existsAccount(accountName)){
     const account = data.accounts[utils.getIndexObjectByAttr(data.accounts, 'name', accountName)];
+    
+    //enter your password
+    if(!utils.verifyPasswordUser()) return;
+
     showMessage(`Account: "${accountName}"`, 'title');
 
     for (const key in account) {
