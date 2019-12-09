@@ -7,7 +7,7 @@ const listAccounts = () => {
   const data = utils.getData();
 
   showMessage(`Available Accounts: ${data.accounts.length}`, 'title');
-  showMessage(`N°  Name`, 'title');
+  showMessage(`N° Account`, 'title');
   data.accounts.forEach((account, i) => {
     showMessage(`${i+1}. ${account.name} `, 'info')
   });
