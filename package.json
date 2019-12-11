@@ -1,6 +1,6 @@
 {
   "name": "account-manager-dj",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Accounts manager for developers",
   "main": "index.js",
   "scripts": {
