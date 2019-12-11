@@ -29,7 +29,7 @@ const updateAccount = (accountName) => {
     })
 
   } else {
-    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts.', 'error');
+    showMessage('The account not exists. Please use "am list" to see your available accounts.', 'error');
   }
 };
 
