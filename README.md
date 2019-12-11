@@ -1,5 +1,5 @@
 # Please try it!!
-### The best accounts manager [Beta]
+### The best accounts manager for developers and programmers [Beta]
 ### You will be able to handle your accounts and get them of easier way
 
 ```
@@ -12,9 +12,9 @@ $ am --help
 
 Commands:
   $ am login   -p=pass123 -t=30    Desc: Set or Update a password to access to your Accounts.
-  $ am add     -a=facebook         Desc: Add a new User Account
-  $ am list    #show all           Desc: List all your availible Accounts
-  $ am show    -a=facebook         Desc: Show the Account info
+  $ am add     -a=facebook         Desc: Add a new User Account.
+  $ am list    #show all           Desc: List all your available Accounts.
+  $ am show    -a=facebook         Desc: Show the Account info.
   $ am update  -a=facebook         Desc: Update the Account.
   $ am remove  -a=facebook         Desc: Remove the Account.
 

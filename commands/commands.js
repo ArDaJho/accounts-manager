@@ -5,42 +5,42 @@ yargs
   password: {
     demand: true,
     alias: 'p',
-    desc: 'Desc: Password to your Accounts, example: -p=password123'
+    desc: 'Desc: Password for your Accounts, example: -p=password123'
   },
   expiredTime: {
     alias: 't',
     default: 30,
-    desc: 'Desc: Expired time in days to your Password[default time 30 days], example: -t=30'
+    desc: 'Desc: Expired time in days for your Password[default time 30 days], example: -t=30'
   }
 })
-.command('add', '-a=facebook         Desc: Add a new User Account', {
+.command('add', '-a=facebook         Desc: Add a new User Account.', {
   account: {
     demand: true,
     alias: 'a',
-    desc: 'Desc: Add new Account name example: -a=Facebook'
+    desc: 'Desc: Add new Account name example: am add -a=Facebook'
   }
 })
-.command('list', '#show all           Desc: List all your availible Accounts', {
+.command('list', '#show all           Desc: List all your availible Accounts.', {
 })
-.command('show', '-a=facebook         Desc: Show the Account info', {
+.command('show', '-a=facebook         Desc: Show the Account info.', {
   account: {
     demand: true,
     alias: 'a',
-    desc: 'Desc: Name of an Account, example: -a=Facebook'
+    desc: 'Desc: Name of the Account, example: am show -a=Facebook'
   }
 })
 .command('update', '-a=facebook         Desc: Update the Account.', {
   account: {
     demand: true,
     alias: 'a',
-    desc: 'Desc: Name of an Account, example: -a=Facebook'
+    desc: 'Desc: Name of the Account, example: am update -a=Facebook'
   }
 })
 .command('remove', '-a=facebook         Desc: Remove the Account.', {
   account: {
     demand: true,
     alias: 'a',
-    desc: 'Desc: Name of an Account, example: -a=Facebook'
+    desc: 'Desc: Name of the  Account, example: am -a=Facebook'
   }
 })
 .help()

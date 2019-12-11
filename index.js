@@ -9,7 +9,13 @@ const updateAccount = require('./services/update-account').updateAccount;
 const setPassword = require('./services/login').setPassword;
 const showMessage = require('./utils/show-messages').showMessage;
 const checkValidPassword = require('./services/check-valid-password').checkValidPassword;
+const dataAccess = require('./services/verify-data-access');
+
 const command =  argv._[0];
+/* The Account Data are in ../../__amdata */
+if (!dataAccess.verifyDataAccess()) {
+  dataAccess.buildDataAccess();
+}
 
 if (!checkValidPassword() && command != 'login') {
   return;
@@ -35,6 +41,6 @@ switch (command) {
     setPassword(argv.password, argv.expiredTime);
     break;
   default:
-    showMessage(`Invalid command. Please try "--help" to see the available options`, 'info');
+    showMessage(`Invalid command. Please try "am --help" to see the available options`, 'info');
     break;
 }

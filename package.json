@@ -1,15 +1,13 @@
 {
   "name": "account-manager-dj",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Accounts manager for developers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-am-file": "cp ./index.js ./am",
     "remove-am-file": "rm -rf ./am",
-    "persist-dev-data": "cp ./data/data.json ./data-dev/data.json && cp ./data-prod/data.json ./data/data.json",
-    "return-dev-data": "cp ./data-dev/data.json ./data/data.json",
-    "publish-lib": "npm run generate-am-file && npm run persist-dev-data && npm i && npm publish --access=public && npm run return-dev-data && npm run remove-am-file",
+    "publish-lib": "npm run generate-am-file && npm i && npm publish --access=public && npm run remove-am-file",
     "unpublish": "npm unpublish account-manager-dj"
   },
   "keywords": [
@@ -22,6 +20,7 @@
   "dependencies": {
     "colors": "^1.4.0",
     "readline-sync": "^1.4.10",
+    "shelljs": "^0.8.3",
     "yargs": "^15.0.2"
   },
   "bin": {

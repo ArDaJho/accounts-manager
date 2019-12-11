@@ -23,13 +23,13 @@ const updateAccount = (accountName) => {
 
       fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
-        showMessage(`Account ${accountName} updated successfuly`, 'success');
+        showMessage(`Account ${accountName} updated successfully`, 'success');
       });
 
     })
 
   } else {
-    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts', 'error');
+    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts.', 'error');
   }
 };
 

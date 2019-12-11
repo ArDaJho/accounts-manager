@@ -14,7 +14,7 @@ const setPassword = (password, expiredTime) => {
     saveLogin(password, expiredTime);
   } else {
     //enter your old password
-    const oldPassword = readlineSync.question('There is a old password, to changed it please enter the old password: ');
+    const oldPassword = readlineSync.question('There is a old password, to change it please enter the old password: ');
     if (login.password != oldPassword){
       showMessage(`Incorrect Password, please try again.`, 'error');      
       return;
@@ -27,16 +27,16 @@ const setPassword = (password, expiredTime) => {
 function saveLogin(password, expiredTime) {
   let data = utils.getData();
   let login = data.login;
-  let currentDate = new Date();
+  let currentDate = new Date(Date.now()).getTime();
 
   login.password = password;
   login.expiredTime = expiredTime;
-  login.createdAt = currentDate.getMilliseconds();
+  login.createdAt = currentDate;
   data.login = login;
 
   fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
     if (error) throw new Error('Error. Login not created');
-    showMessage(`Login set successfuly`, 'success');
+    showMessage(`Login set successfully`, 'success');
   });
 }
 module.exports = {

@@ -1,6 +1,8 @@
 const readlineSync = require('readline-sync');
 const path = require('path');
-const DATA_PATH = path.join(__dirname, '../data', '/data.json');
+const DATA_PATH = path.join(__dirname, '../../__amdata', '/data.json');
+const DATA_FOLDER_PATH = path.join(__dirname, '../../__amdata');
+const DATA_PATH_PROD = path.join(__dirname, '../data-prod', '/data.json');
 
 
 function existsAccount(name) {
@@ -39,13 +41,13 @@ function buildNewAccount(name, callback) {
   let value = '';
   showMessage(`Account: ${name}`, 'info');
   do {
-    key = readlineSync.question( `Please enter a new secret key: Example "email" (Press x and enter to save the account): `);
+    key = readlineSync.question( `Please enter a new SECRET KEY: Example "email" (Press x and enter to save the account): `);
     if (key.toLowerCase() != 'x') {
-      value = readlineSync.question( `Please enter the value to "${key}": Example "test@test.com" (Press x and enter to save the account): `);
+      value = readlineSync.question( `Please enter the VALUE for the SECRET KEY "${key}": Example "test@test.com" (Press x and enter to save the account): `);
       if (value.toLowerCase() != 'x') {
         newAccount.name = name;
         newAccount[key.replace(/ /g, "-")] = value.toString();
-        showMessage(`Key "${key}" added to the account "${name}"\n`, 'success');
+        showMessage(`Key "${key}" added to the account "${name} successfully."\n`, 'success');
       } else {
         key = 'x';
       }
@@ -73,5 +75,7 @@ module.exports = {
   getIndexObjectByAttr,
   buildNewAccount,
   verifyPasswordUser,
-  DATA_PATH
+  DATA_PATH,
+  DATA_FOLDER_PATH,
+  DATA_PATH_PROD
 }

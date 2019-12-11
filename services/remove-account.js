@@ -25,13 +25,13 @@ const removeAccount = (accountName) => {
       }
       fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
-        showMessage('Account removed successfuly', 'success');
+        showMessage('Account removed successfully', 'success');
       });
     } else {
       showMessage('Operation canceled.', 'warn');
     }
   } else {
-    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts', 'error');
+    showMessage('The account not exists. Please use "acc-mg list" to see your available accounts.', 'error');
   }
 };
 

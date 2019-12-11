@@ -7,7 +7,7 @@ const createNewUserAccount = (name) => {
   let data = utils.getData();
 
   if (utils.existsAccount(name)) {
-    showMessage(`Duplicate Account "${name}", please choose a option`, 'warn');
+    showMessage(`Duplicate Account "${name}", please choose an option`, 'warn');
     const userAnswer = readlineSync.question(
     `1. Replace existing account.\n2. Create a new account (prefix "_N" will be increased).\n3. Cancel\n: `);
 
@@ -29,7 +29,7 @@ const createNewUserAccount = (name) => {
           data.accounts[index] = newAccount;
           fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
-            showMessage(`Account ${name} replaced successfuly`, 'success');
+            showMessage(`Account ${name} replaced successfully`, 'success');
           });
         })        
         break;
@@ -47,7 +47,7 @@ const createNewUserAccount = (name) => {
           data.accounts.push(newAccount);
           fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
-            showMessage(`Account ${name} saved successfuly`, 'success');
+            showMessage(`Account ${name} saved successfully`, 'success');
           });
         });
         break;
@@ -69,7 +69,7 @@ const createNewUserAccount = (name) => {
       data.accounts.push(newAccount);
       fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
-        showMessage(`Account ${name} saved successfuly`, 'success');
+        showMessage(`Account ${name} saved successfully`, 'success');
       });
     });
   }
