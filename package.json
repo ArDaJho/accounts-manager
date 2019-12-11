@@ -1,13 +1,15 @@
 {
   "name": "account-manager-dj",
-  "version": "1.0.23",
+  "version": "1.0.27",
   "description": "Accounts manager for developers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-am-file": "cp ./index.js ./am",
+    "install-dos2unix": "apt-get install dos2unix",
+    "clean-file": "dos2unix ./am",
     "remove-am-file": "rm -rf ./am",
-    "publish-lib": "npm run generate-am-file && npm i && npm publish --access=public && npm run remove-am-file",
+    "publish-lib": "npm run generate-am-file && npm run clean-file && npm i && npm publish --access=public && npm run remove-am-file",
     "unpublish": "npm unpublish account-manager-dj"
   },
   "keywords": [
