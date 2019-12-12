@@ -18,15 +18,12 @@ const updateAccount = (accountName) => {
       oldAccount = {...oldAccount, ...newAccount};
       data.accounts[oldAccountIndex] = oldAccount;
 
-      showMessage(`Account: ${accountName}`, 'title');
-      showMessage(oldAccount, 'info');
-
       fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
         showMessage(`Account ${accountName} updated successfully`, 'success');
       });
 
-    })
+    });
 
   } else {
     showMessage('The account not exists. Please use "am list" to see your available accounts.', 'error');

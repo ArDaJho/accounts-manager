@@ -11,6 +11,8 @@ const removeAccount = (accountName) => {
     const userAnwser = readlineSync.question( `Are you sure that you want to remove the account ${accountName}?(y/n): `);
     if ( userAnwser.toLowerCase() == 'y') {
 
+      if(!utils.verifyPasswordUser()) return;
+
       const indexAccount = utils.getIndexObjectByAttr(data.accounts, 'name', accountName);
       const account = data.accounts[indexAccount];
 

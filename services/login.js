@@ -1,7 +1,6 @@
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const fs = require('fs');
-const readlineSync = require('readline-sync');
 
 
 const setPassword = (password, expiredTime) => {
@@ -14,11 +13,9 @@ const setPassword = (password, expiredTime) => {
     saveLogin(password, expiredTime);
   } else {
     //enter your old password
-    const oldPassword = readlineSync.question('There is a old password, to change it please enter the old password: ');
-    if (login.password != oldPassword){
-      showMessage(`Incorrect Password, please try again.`, 'error');      
-      return;
-    }
+    showMessage('There is a old password, to change it you have to authenticate.', 'info');
+    if(!utils.verifyPasswordUser()) return;
+
     saveLogin(password, expiredTime);
   }
 

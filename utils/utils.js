@@ -60,7 +60,7 @@ function buildNewAccount(name, callback) {
 
 function verifyPasswordUser() {
   const data = getData();
-  const password = readlineSync.question('Please enter your password: ');
+  const password = readlineSync.question('Please enter your password: ', {hideEchoBack: true/*, mask:'' #with this the console not show anything*/});
   if (data.login.password != password){
     showMessage(`Incorrect Password, please try again.`, 'error');
     return false;
