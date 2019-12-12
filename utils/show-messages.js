@@ -15,7 +15,7 @@ colors.setTheme({
   error: 'red'
 });
 
-showMessage = (message, type) => {
+showMessage = (message, type = 'info') => {
   try {
     console.log(colors[type](message));
   } catch (error) {

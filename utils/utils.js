@@ -3,7 +3,7 @@ const path = require('path');
 const DATA_PATH = path.join(__dirname, '../../__amdata', '/data.json');
 const DATA_FOLDER_PATH = path.join(__dirname, '../../__amdata');
 const DATA_PATH_PROD = path.join(__dirname, '../data-prod', '/data.json');
-
+const ACCOUNT_PROPERTIES_TO_HIDE = ['accountNumber'];
 
 function existsAccount(name) {
   const data = getData();
@@ -60,14 +60,24 @@ function buildNewAccount(name, callback) {
 
 function verifyPasswordUser() {
   const data = getData();
-  const password = readlineSync.question('Please enter your password: ');
+  const password = readlineSync.question('Please enter your password: ', {hideEchoBack: true/*, mask:'' #with this the console not show anything*/});
   if (data.login.password != password){
     showMessage(`Incorrect Password, please try again.`, 'error');
     return false;
   }
   return true;
-} 
+}
 
+function showAccount(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (!ACCOUNT_PROPERTIES_TO_HIDE.filter(prop => key == prop)[0]) {
+        const value = obj[key];
+        showMessage(`${key}: ${value}`, 'info');
+      }
+    }
+  }
+}
 
 module.exports = {
   existsAccount,
@@ -75,6 +85,7 @@ module.exports = {
   getIndexObjectByAttr,
   buildNewAccount,
   verifyPasswordUser,
+  showAccount,
   DATA_PATH,
   DATA_FOLDER_PATH,
   DATA_PATH_PROD
