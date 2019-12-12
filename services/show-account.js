@@ -13,13 +13,8 @@ const showAccount = (accountName) => {
     if(!utils.verifyPasswordUser()) return;
 
     showMessage(`Account: "${accountName}"`, 'title');
+    utils.showAccount(account);
 
-    for (const key in account) {
-      if (account.hasOwnProperty(key)) {
-        const value = account[key];
-        showMessage(`${key}: ${value}`, 'info');        
-      }
-    }
   } else {
     showMessage('The account not exists. Please use "am list" to see your available accounts.', 'error');
   }

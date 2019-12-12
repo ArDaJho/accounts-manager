@@ -19,12 +19,8 @@ const removeAccount = (accountName) => {
       data.accounts.splice(indexAccount, 1);
 
       showMessage('Removing the account:...', 'error');
-      for (const key in account) {
-        if (account.hasOwnProperty(key)) {
-          const value = account[key];
-          showMessage(`${key}: ${value}`, 'error');        
-        }
-      }
+      utils.showAccount(account);      
+
       fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage('Account removed successfully', 'success');
