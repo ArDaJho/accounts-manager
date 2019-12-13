@@ -1,10 +1,13 @@
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const fs = require('fs');
+const pathTest = "../__amdata/data.json";
 
 
 const updateAccount = (accountName) => {
   const data = utils.getData();
+  if(!utils.verifyPasswordUser()) return;
+
   if (utils.existsAccount(accountName)){
     utils.buildNewAccount(accountName, (newAccount) => {
 
@@ -19,9 +22,16 @@ const updateAccount = (accountName) => {
       data.accounts[oldAccountIndex] = oldAccount;
 
       showMessage(`Account: ${accountName}`, 'title');
-      showMessage(oldAccount, 'info');
+      for (const key in oldAccount) {
+        if (oldAccount.hasOwnProperty(key)) {
+          let  value = oldAccount[key];
+          value = utils.decrypt(value);
+          showMessage(`${key}: ${value}`, 'info');        
+        }
+      }
+      // showMessage(oldAccount, 'info');
 
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(pathTest, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
         showMessage(`Account ${accountName} updated successfully`, 'success');
       });
