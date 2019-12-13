@@ -2,9 +2,11 @@ const fs = require('fs');
 const readlineSync = require('readline-sync');
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
+const pathTest = "../__amdata/data.json";
 
 const createNewUserAccount = (name) => {
   let data = utils.getData();
+  if(!utils.verifyPasswordUser()) return;
 
   if (utils.existsAccount(name)) {
     showMessage(`Duplicate Account "${name}", please choose an option`, 'warn');
@@ -42,8 +44,11 @@ const createNewUserAccount = (name) => {
             return;
           }
           const index = utils.getIndexObjectByAttr(data.accounts, 'name', name);
-          newAccount.accountNumber = data.accounts[index].accountNumber + 1;
-          newAccount.name += `_${newAccount.accountNumber}`;
+          let accNumber = +utils.decrypt(data.accounts[index].accountNumber) + 1;
+          newAccount.accountNumber = utils.encrypt(accNumber);
+          let accName = utils.decrypt(newAccount.name) += `_${newAccount.accountNumber}`;
+          newAccount.name = utils.encrypt(accName);
+
           data.accounts.push(newAccount);
           fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
@@ -65,9 +70,9 @@ const createNewUserAccount = (name) => {
         showMessage('The new Account is empty, account not created.', 'warn');
         return;
       }
-      newAccount.accountNumber = 1;
+      newAccount.accountNumber = utils.encrypt(1);
       data.accounts.push(newAccount);
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(pathTest, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage(`Account ${name} saved successfully`, 'success');
       });
