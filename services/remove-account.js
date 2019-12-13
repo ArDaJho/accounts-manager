@@ -2,10 +2,13 @@ const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const readlineSync = require('readline-sync');
 const fs = require('fs');
+const pathTest = "../__amdata/data.json";
 
 
 
 const removeAccount = (accountName) => {
+  if(!utils.verifyPasswordUser()) return;
+
   const data = utils.getData();
   if (utils.existsAccount(accountName)) {
     const userAnwser = readlineSync.question( `Are you sure that you want to remove the account ${accountName}?(y/n): `);
@@ -19,11 +22,12 @@ const removeAccount = (accountName) => {
       showMessage('Removing the account:...', 'error');
       for (const key in account) {
         if (account.hasOwnProperty(key)) {
-          const value = account[key];
+          let value = account[key];
+          value = utils.decrypt(value);
           showMessage(`${key}: ${value}`, 'error');        
         }
       }
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(pathTest, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage('Account removed successfully', 'success');
       });
