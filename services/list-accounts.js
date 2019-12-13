@@ -9,7 +9,8 @@ const listAccounts = () => {
   showMessage(`Available Accounts: ${data.accounts.length}`, 'title');
   showMessage(`N° Account`, 'title');
   data.accounts.forEach((account, i) => {
-    showMessage(`${i+1}. ${account.name} `, 'info')
+    const accountName = utils.decrypt(account.name);
+    showMessage(`${i+1}. ${accountName} `, 'info')
   });
 };
 

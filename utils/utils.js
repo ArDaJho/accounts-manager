@@ -10,6 +10,10 @@ const DATA_PATH = path.join(__dirname, '../../__amdata', '/data.json');
 const DATA_FOLDER_PATH = path.join(__dirname, '../../__amdata');
 const DATA_PATH_PROD = path.join(__dirname, '../data-prod', '/data.json');
 const ACCOUNT_PROPERTIES_TO_HIDE = ['accountNumber'];
+const secretKeyCrypt = 'lion';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr(secretKeyCrypt);
+
 
 function existsAccount(name) {
   const data = getData();
@@ -17,7 +21,11 @@ function existsAccount(name) {
 
   if(!accounts) return false;
 
-  if (accounts.filter(ac => ac.name == name)[0]) {
+  const accAux =  accounts.filter(ac => {  
+    return decrypt(ac.name) == name;
+  });
+
+  if (accAux[0]) {
     return true;
   }
   return false;
@@ -34,7 +42,7 @@ function getData() {
 
 function getIndexObjectByAttr(array, attr, value) {
   for(var i = 0; i < array.length; i += 1) {
-      if(array[i][attr] === value) {
+      if(decrypt(array[i][attr]) === value) {
           return i;
       }
   }
@@ -52,7 +60,9 @@ function buildNewAccount(name, callback) {
     if (key.toLowerCase() != 'x') {
       value = readlineSync.question( `Please enter the VALUE for the SECRET KEY "${key}": Example "test@test.com" (Press x and enter to save the account): `);
       if (value.toLowerCase() != 'x') {
-        newAccount.name = name;
+        nameEncript = encrypt(name);
+        newAccount.name = nameEncript;
+        value = encrypt(value);
         newAccount[key.replace(/ /g, "-")] = value.toString();
         showMessage(`Key "${key}" added to the account "${name} successfully."\n`, 'success');
       } else {
@@ -68,7 +78,8 @@ function buildNewAccount(name, callback) {
 function verifyPasswordUser() {
   const data = getData();
   const password = readlineSync.question('Please enter your password: ', {hideEchoBack: true/*, mask:'' #with this the console not show anything*/});
-  if (data.login.password != password){
+  const decryptedPasword = decrypt(data.login.password);
+  if (decryptedPasword != password){
     showMessage(`Incorrect Password, please try again.`, 'error');
     return false;
   }
@@ -155,6 +166,23 @@ function getValidCommand(command) {
       break;
   }
 }
+function encrypt(text) {
+  return cryptr.encrypt(text);
+}
+
+function decrypt(text) {
+  return cryptr.decrypt(text);
+}
+
+function encryptAllData() {
+
+  fs.writeFile(pathTest, JSON.stringify(data), (error) => {
+    if (error) throw new Error('Error');
+    console.log(data);
+  });
+  
+}
+
 
 module.exports = {
   existsAccount,
@@ -168,7 +196,11 @@ module.exports = {
   generateMetaData,
   getValidCommand,
   getAmMetaData,
+  encrypt,
+  decrypt,
+  cryptr,
   DATA_PATH,
   DATA_FOLDER_PATH,
-  DATA_PATH_PROD
+  DATA_PATH_PROD,
+  secretKeyCrypt,
 }

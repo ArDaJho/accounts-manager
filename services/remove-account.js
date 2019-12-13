@@ -2,10 +2,13 @@ const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const readlineSync = require('readline-sync');
 const fs = require('fs');
+const pathTest = "../__amdata/data.json";
 
 
 
 const removeAccount = (accountName) => {
+  if(!utils.verifyPasswordUser()) return;
+
   const data = utils.getData();
   let metaData = utils.getAmMetaData();
 
