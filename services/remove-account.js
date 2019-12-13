@@ -7,6 +7,8 @@ const fs = require('fs');
 
 const removeAccount = (accountName) => {
   const data = utils.getData();
+  let metaData = utils.getAmMetaData();
+
   if (utils.existsAccount(accountName)) {
     const userAnwser = readlineSync.question( `Are you sure that you want to remove the account ${accountName}?(y/n): `);
     if ( userAnwser.toLowerCase() == 'y') {
@@ -21,7 +23,7 @@ const removeAccount = (accountName) => {
       showMessage('Removing the account:...', 'error');
       utils.showAccount(account);      
 
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage('Account removed successfully', 'success');
       });
