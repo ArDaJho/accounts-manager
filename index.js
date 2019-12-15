@@ -10,7 +10,7 @@ const setPassword = require('./services/login').setPassword;
 const showMessage = require('./utils/show-messages').showMessage;
 const checkValidPassword = require('./services/check-valid-password').checkValidPassword;
 const dataAccess = require('./services/verify-data-access');
-const setDataPath = require('./services/set-data-path').setDataPath;
+const data = require('./services/data');
 const utils = require('./utils/utils');
 
 
@@ -24,15 +24,13 @@ if (!utils.verifyMetaDataAccess()){
   utils.generateMetaData();
 }
 
-
-
 /* The Account Data are in ../../__amdata/data.json */
-if (!dataAccess.verifyDataAccess()) {
-  showMessage('Default data created in: nodejs/node_modules/__amdata/data.json');
+if (!dataAccess.verifyDataAccess()) {  
   dataAccess.buildDataAccess();
 }
 
-if (!checkValidPassword() && command != 'login') {
+if (!checkValidPassword() && (command != 'login' && command != 'data')) {
+  showMessage(`There is not password. Please use "am login -p=pass123 -t=30" or "am data -p=C:\\Users\\UserA\\Desktop\\MYDATA"`, "warn");
   return;
 }
 
@@ -56,8 +54,8 @@ switch (command) {
     //validate if (argv.password) showMessage('Please enter a valid password.')
     setPassword(argv.password, argv.expiredTime);
     break;
-  case 'data':
-    setDataPath(argv.path);
+  case 'data':    
+    data.setDataPath(argv.path);
     break;
   default:
     showMessage(`Invalid command. Please try "am --help" to see the available options`, 'info');

@@ -6,7 +6,12 @@ const shell = require('shelljs');
 const setDataPath = (dataPath) => {
 
   if (!dataPath) {
+    showDataPath();
+    return;
+  }
+  if (dataPath == true) {
     showMessage('Invalid Data path', 'error');
+    showDataPath();
     return;
   }
 
@@ -42,7 +47,8 @@ const verifyValidDataJson  = (dataJsonPath) => {
 }
 
 const createNewDataJson  = (dataJsonPath) => {
-  shell.exec(`${utils.getValidCommand('cp')}  ${utils.DATA_PATH_PROD} ${dataJsonPath}`, {silent: true});
+  const metaData = utils.getAmMetaData();
+  shell.exec(`${utils.getValidCommand('cp')}  ${metaData.DATA_PATH} ${dataJsonPath}`, {silent: true});
   shell.exec(`${utils.getValidCommand('chmod')} ${dataJsonPath}`, {silent: true});
   if (dataJsonPath[dataJsonPath.length-1] !='\\' && dataJsonPath.includes('\\')){
     dataJsonPath = dataJsonPath + '\\\\';
@@ -54,6 +60,11 @@ const createNewDataJson  = (dataJsonPath) => {
   showMessage('Data path set successfully', 'success');
 }
 
+const showDataPath = () => {
+  const metaData = utils.getAmMetaData();
+  showMessage(`Current data path: ${metaData.DATA_PATH}`, 'info');
+  showMessage(`To change it. Use "am data -p=/MyData/Path" or "am data -p=/MyData/Path/data.json"`, 'info');
+}
 
 
 module.exports = {

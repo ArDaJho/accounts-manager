@@ -11,6 +11,9 @@ $ npm i account-manager-dj -g
 $ am --help
 
 Commands:
+  $ am data    -p=/myData/         Desc: Set or Update the folder where    
+                                    your account information is stored, default:
+                                    nodejs/node_modules/__amdata/data.json.
   $ am login   -p=pass123 -t=30    Desc: Set or Update a password to access to your Accounts.
   $ am add     -a=facebook         Desc: Add a new User Account.
   $ am list    #show all           Desc: List all your available Accounts.

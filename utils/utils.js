@@ -25,8 +25,7 @@ function existsAccount(name) {
 
 function getData() {
   try {
-    let metaData = utils.getAmMetaData();
-
+    let metaData = getAmMetaData();
     return require(metaData.DATA_PATH);
   } catch (error) {
     throw new Error('Error to read the data base, try again please');
@@ -97,6 +96,8 @@ function generateMetaData() {
     shell.exec(`mkdir ${DATA_FOLDER_PATH}`, {silent:true});  
     shell.exec(`${getValidCommand('cp')} ${AM_META_DATA_PATH_PROD} ${DATA_FOLDER_PATH}`, {silent:true});
     shell.exec(`${getValidCommand('chmod')} ${DATA_FOLDER_PATH}`, {silent:true});
+    console.log(1);
+    
     writeInAmMetaData('DATA_PATH', DATA_PATH);
     writeInAmMetaData('DATA_FOLDER_PATH', DATA_FOLDER_PATH);
   } else {
@@ -104,6 +105,7 @@ function generateMetaData() {
     if (shell.exec(`${getValidCommand('cat')} ${AM_META_DATA}`, {silent:true}).code !== 0) {      
       shell.exec(`${getValidCommand('cp')} ${AM_META_DATA_PATH_PROD} ${DATA_FOLDER_PATH}`, {silent:true});
       shell.exec(`${getValidCommand('chmod')} ${DATA_FOLDER_PATH}`, {silent:true});
+      console.log('2');
       writeInAmMetaData('DATA_PATH', DATA_PATH);
       writeInAmMetaData('DATA_FOLDER_PATH', DATA_FOLDER_PATH);
     }
@@ -118,10 +120,10 @@ function getAmMetaData() {
   }
 }
 
-function writeInAmMetaData(key, value) {
+async function writeInAmMetaData(key, value) {
   let data = getAmMetaData();
   data[key] = value;
-  fs.writeFile(AM_META_DATA, JSON.stringify(data), (error) => {
+  await fs.writeFileSync(AM_META_DATA, JSON.stringify(data), (error) => {
     if (error) throw new Error('Error. Meta Data not created');
   });
 }
@@ -133,15 +135,13 @@ function getValidCommand(command) {
   let chmodCommand = 'chmod 777 -R';
   if (opsys == "darwin") {
       opsys = "MacOS";
-      cpCommand = 'cp';
   } else if (opsys == "win32" || opsys == "win64") {
       opsys = "Windows";
-      cpCommand = 'copy';
-      chmodCommand = 'cd';
       catCommand = 'type';
+      cpCommand = 'copy';
+      chmodCommand = 'cd'; //chmod does not working in Windows
   } else if (opsys == "linux") {
       opsys = "Linux";
-      cpCommand = 'cp';
   }
 
   switch (command) {
