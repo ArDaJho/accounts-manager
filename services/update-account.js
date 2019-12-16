@@ -5,6 +5,8 @@ const fs = require('fs');
 
 const updateAccount = (accountName) => {
   const data = utils.getData();
+  let metaData = utils.getAmMetaData();
+
   if (utils.existsAccount(accountName)){
     utils.buildNewAccount(accountName, (newAccount) => {
 
@@ -18,7 +20,7 @@ const updateAccount = (accountName) => {
       oldAccount = {...oldAccount, ...newAccount};
       data.accounts[oldAccountIndex] = oldAccount;
 
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
         showMessage(`Account ${accountName} updated successfully`, 'success');
       });

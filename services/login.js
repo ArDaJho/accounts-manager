@@ -30,8 +30,8 @@ function saveLogin(password, expiredTime) {
   login.expiredTime = expiredTime;
   login.createdAt = currentDate;
   data.login = login;
-
-  fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+  let metaD =  utils.getAmMetaData();
+  fs.writeFile(metaD.DATA_PATH, JSON.stringify(data), (error) => {
     if (error) throw new Error('Error. Login not created');
     showMessage(`Login set successfully`, 'success');
   });

@@ -5,8 +5,7 @@ const checkValidPassword = () => {
   const data = utils.getData();
   const login = data.login;
 
-  if (!login.password) {
-    showMessage(`There is not password. Please use "login -p=pass123 -t=30"`, "warn");
+  if (!login || !login.password) {    
     return false;
   }
   const createdAt = login.createdAt;

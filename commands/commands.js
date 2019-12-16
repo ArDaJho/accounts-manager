@@ -1,6 +1,13 @@
 const yargs = require('yargs');
 
 yargs
+.command('data', '-p=/myData/          Desc: Set or Update the folder where your account information is stored, default: nodejs/node_modules/__amdata/data.json.', {
+  path: {
+    demand: false,
+    alias: 'p',
+    desc: 'Desc: If you have an old data.json please enter it in the path Example: -p=/myData/data.json if not only enter -p=/myData/'
+  }
+})
 .command('login', '-p=pass123 -t=30    Desc: Set or Update a password to access to your Accounts.', {
   password: {
     demand: true,

@@ -1,5 +1,11 @@
 const readlineSync = require('readline-sync');
 const path = require('path');
+const shell = require('shelljs');
+const fs = require('fs');
+
+const AM_META_DATA = path.join(__dirname, '../../__amdata', '/__am.json');
+const AM_META_DATA_PATH_PROD = path.join(__dirname, '../data-prod', '/__am.json');
+
 const DATA_PATH = path.join(__dirname, '../../__amdata', '/data.json');
 const DATA_FOLDER_PATH = path.join(__dirname, '../../__amdata');
 const DATA_PATH_PROD = path.join(__dirname, '../data-prod', '/data.json');
@@ -19,7 +25,8 @@ function existsAccount(name) {
 
 function getData() {
   try {
-    return require(DATA_PATH);
+    let metaData = getAmMetaData();
+    return require(metaData.DATA_PATH);
   } catch (error) {
     throw new Error('Error to read the data base, try again please');
   }
@@ -79,6 +86,76 @@ function showAccount(obj) {
   }
 }
 
+const verifyMetaDataAccess = () => {
+  if (shell.exec(`cat ${AM_META_DATA}`, {silent:true}).code !== 0) return false;
+  return true;
+}
+
+function generateMetaData() {
+  if (shell.exec(`cd ${DATA_FOLDER_PATH}`, {silent:true}).code !== 0) {
+    shell.exec(`mkdir ${DATA_FOLDER_PATH}`, {silent:true});  
+    shell.exec(`${getValidCommand('cp')} ${AM_META_DATA_PATH_PROD} ${DATA_FOLDER_PATH}`, {silent:true});
+    shell.exec(`${getValidCommand('chmod')} ${DATA_FOLDER_PATH}`, {silent:true});
+    console.log(1);
+    
+    writeInAmMetaData('DATA_PATH', DATA_PATH);
+    writeInAmMetaData('DATA_FOLDER_PATH', DATA_FOLDER_PATH);
+  } else {
+    
+    if (shell.exec(`${getValidCommand('cat')} ${AM_META_DATA}`, {silent:true}).code !== 0) {      
+      shell.exec(`${getValidCommand('cp')} ${AM_META_DATA_PATH_PROD} ${DATA_FOLDER_PATH}`, {silent:true});
+      shell.exec(`${getValidCommand('chmod')} ${DATA_FOLDER_PATH}`, {silent:true});
+      console.log('2');
+      writeInAmMetaData('DATA_PATH', DATA_PATH);
+      writeInAmMetaData('DATA_FOLDER_PATH', DATA_FOLDER_PATH);
+    }
+  }
+}
+
+function getAmMetaData() {
+  try {
+    return require(AM_META_DATA);
+  } catch (error) {
+    throw new Error('Error to read the data base, try again please');
+  }
+}
+
+async function writeInAmMetaData(key, value) {
+  let data = getAmMetaData();
+  data[key] = value;
+  await fs.writeFileSync(AM_META_DATA, JSON.stringify(data), (error) => {
+    if (error) throw new Error('Error. Meta Data not created');
+  });
+}
+
+function getValidCommand(command) {
+  let opsys = process.platform;
+  let cpCommand = 'cp';
+  let catCommand = 'cat';
+  let chmodCommand = 'chmod 777 -R';
+  if (opsys == "darwin") {
+      opsys = "MacOS";
+  } else if (opsys == "win32" || opsys == "win64") {
+      opsys = "Windows";
+      catCommand = 'type';
+      cpCommand = 'copy';
+      chmodCommand = 'cd'; //chmod does not working in Windows
+  } else if (opsys == "linux") {
+      opsys = "Linux";
+  }
+
+  switch (command) {
+    case 'cat':
+      return catCommand;
+    case 'cp':
+      return cpCommand;
+    case 'chmod':
+      return chmodCommand;
+    default:
+      break;
+  }
+}
+
 module.exports = {
   existsAccount,
   getData,
@@ -86,6 +163,11 @@ module.exports = {
   buildNewAccount,
   verifyPasswordUser,
   showAccount,
+  writeInAmMetaData,
+  verifyMetaDataAccess,
+  generateMetaData,
+  getValidCommand,
+  getAmMetaData,
   DATA_PATH,
   DATA_FOLDER_PATH,
   DATA_PATH_PROD

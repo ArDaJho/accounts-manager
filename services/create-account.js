@@ -5,6 +5,7 @@ const utils = require('../utils/utils');
 
 const createNewUserAccount = (name) => {
   let data = utils.getData();
+  let metaData = utils.getAmMetaData();
 
   if (utils.existsAccount(name)) {
     showMessage(`Duplicate Account "${name}", please choose an option`, 'warn');
@@ -27,7 +28,7 @@ const createNewUserAccount = (name) => {
           const index = utils.getIndexObjectByAttr(data.accounts, 'name', name);
           newAccount.accountNumber = data.accounts[index].accountNumber;
           data.accounts[index] = newAccount;
-          fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+          fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
             showMessage(`Account ${name} replaced successfully`, 'success');
           });
@@ -45,7 +46,7 @@ const createNewUserAccount = (name) => {
           newAccount.accountNumber = data.accounts[index].accountNumber + 1;
           newAccount.name += `_${newAccount.accountNumber}`;
           data.accounts.push(newAccount);
-          fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+          fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
             if (error) throw new Error('Error. Account not created');
             showMessage(`Account ${name} saved successfully`, 'success');
           });
@@ -67,7 +68,7 @@ const createNewUserAccount = (name) => {
       }
       newAccount.accountNumber = 1;
       data.accounts.push(newAccount);
-      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
+      fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage(`Account ${name} saved successfully`, 'success');
       });
