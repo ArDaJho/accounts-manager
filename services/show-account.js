@@ -1,7 +1,5 @@
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
-const Cryptr = require('cryptr');
-
 
 
 const showAccount = (accountName) => {

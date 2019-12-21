@@ -2,7 +2,6 @@ const fs = require('fs');
 const readlineSync = require('readline-sync');
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
-const pathTest = "../__amdata/data.json";
 
 const createNewUserAccount = (name) => {
   let data = utils.getData();
@@ -72,7 +71,7 @@ const createNewUserAccount = (name) => {
       }
       newAccount.accountNumber = utils.encrypt(1);
       data.accounts.push(newAccount);
-      fs.writeFile(pathTest, JSON.stringify(data), (error) => {
+      fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage(`Account ${name} saved successfully`, 'success');
       });

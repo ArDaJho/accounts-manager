@@ -2,9 +2,6 @@ const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const fs = require('fs');
 const readlineSync = require('readline-sync');
-const pathTest = "../__amdata/data.json";
-const Cryptr = require('cryptr');
-const secretKeyCrypt = '';
 
 const setPassword = (password, expiredTime) => {
   expiredTime = expiredTime ? expiredTime : 30;
@@ -40,7 +37,7 @@ function saveLogin(password, expiredTime) {
   login.createdAt = currentDate;
   data.login = login;
 
-  fs.writeFile(pathTest, JSON.stringify(data), (error) => {
+  fs.writeFile(utils.DATA_PATH, JSON.stringify(data), (error) => {
     if (error) throw new Error('Error. Login not created');
     showMessage(`Login set successfully`, 'success');
   });

@@ -26,7 +26,7 @@ const buildDataAccess = () => {
 }
 
 const verifyDataAccess = () => {
-  if (shell.exec(`cd ${utils.DATA_FOLDER_PATH}`).code !== 0) return false;
+  if (shell.exec(`cd ${utils.DATA_FOLDER_PATH}`, {silent:true}).code !== 0) return false;
   return true;
 }
 
