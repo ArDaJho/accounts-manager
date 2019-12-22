@@ -13,7 +13,6 @@ const ACCOUNT_PROPERTIES_TO_HIDE = ['accountNumber'];
 const secretKeyCrypt = 'l!0nH3dg3H0g';
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(secretKeyCrypt);
-const pathTest = "../__amdata/data.json";
 
 function existsAccount(name) {
   const data = getData();
@@ -166,22 +165,6 @@ function getValidCommand(command) {
       break;
   }
 }
-function encrypt(text) {
-  return cryptr.encrypt(text);
-}
-
-function decrypt(text) {
-  return cryptr.decrypt(text);
-}
-
-function encryptAllData() {
-
-  fs.writeFile(pathTest, JSON.stringify(data), (error) => {
-    if (error) throw new Error('Error');
-    console.log(data);
-  });
-  
-}
 
 function encrypt(text) {
   return cryptr.encrypt(text);
@@ -194,6 +177,7 @@ function decrypt(text) {
 function encryptAllData() {
 
     let data = getData();
+    let metaData = getAmMetaData();
     if (data.login.encripted) {
       return;
     }
@@ -207,7 +191,7 @@ function encryptAllData() {
       oldAccount = {...data.login, ...object};
       data.login = oldAccount;
       data.login.encripted = true;
-      fs.writeFileSync(pathTest, JSON.stringify(data), (error) => {
+      fs.writeFileSync(metaData.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
       });
     }
@@ -237,15 +221,19 @@ function encryptAllData() {
       }
       accountsArray.push(dataJson);
     }
-    if (accountsArray[0].length == 0) {
-      return;
-    } else {
-      data.accounts = accountsArray;
-      data.login.encripted = true;
-      fs.writeFileSync(pathTest, JSON.stringify(data), (error) => {
-        if (error) throw new Error('Error. Account not updated');
-      });
-    } 
+
+    if (accountsArray[0]) {
+      
+      if (accountsArray[0].length == 0) {
+        return;
+      } else {
+        data.accounts = accountsArray;
+        data.login.encripted = true;
+        fs.writeFileSync(metaData.DATA_PATH, JSON.stringify(data), (error) => {
+          if (error) throw new Error('Error. Account not updated');
+        });
+      } 
+    }
 }
 
 

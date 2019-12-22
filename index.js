@@ -34,7 +34,9 @@ if (!checkValidPassword() && (command != 'login' && command != 'data')) {
   return;
 }
 
-utils.encryptAllData();
+if (command != 'login' && command != 'data') {
+  utils.encryptAllData();
+}
 
 switch (command) {
   case 'add':
