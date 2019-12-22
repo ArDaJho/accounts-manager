@@ -3,7 +3,6 @@ const utils = require('../utils/utils');
 const Cryptr = require('cryptr');
 
 
-
 const showAccount = (accountName) => {
   //get password to show the data
   const data = utils.getData();

@@ -1,7 +1,7 @@
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const fs = require('fs');
-const pathTest = "../__amdata/data.json";
+// const pathTest = "../__amdata/data.json";
 
 
 const updateAccount = (accountName) => {

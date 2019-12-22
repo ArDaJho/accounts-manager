@@ -34,6 +34,8 @@ if (!checkValidPassword() && (command != 'login' && command != 'data')) {
   return;
 }
 
+utils.encryptAllData();
+
 switch (command) {
   case 'add':
     createNewUserAccount(argv.account);
