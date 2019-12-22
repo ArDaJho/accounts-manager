@@ -5,7 +5,6 @@ const fs = require('fs');
 const pathTest = "../__amdata/data.json";
 
 
-
 const removeAccount = (accountName) => {
   if(!utils.verifyPasswordUser()) return;
 

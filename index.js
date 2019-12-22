@@ -10,6 +10,7 @@ const setPassword = require('./services/login').setPassword;
 const showMessage = require('./utils/show-messages').showMessage;
 const checkValidPassword = require('./services/check-valid-password').checkValidPassword;
 const dataAccess = require('./services/verify-data-access');
+const utils = require('./utils/utils');
 
 const command =  argv._[0];
 /* The Account Data are in ../../__amdata */
@@ -20,6 +21,8 @@ if (!dataAccess.verifyDataAccess()) {
 if (!checkValidPassword() && command != 'login') {
   return;
 }
+
+utils.encryptAllData();
 
 switch (command) {
   case 'add':

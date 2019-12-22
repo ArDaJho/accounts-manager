@@ -1,7 +1,7 @@
 const showMessage = require('../utils/show-messages').showMessage;
 const utils = require('../utils/utils');
 const fs = require('fs');
-const pathTest = "../__amdata/data.json";
+// const pathTest = "../__amdata/data.json";
 
 
 const updateAccount = (accountName) => {
@@ -29,7 +29,6 @@ const updateAccount = (accountName) => {
           showMessage(`${key}: ${value}`, 'info');        
         }
       }
-      // showMessage(oldAccount, 'info');
 
       fs.writeFile(pathTest, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not updated');
