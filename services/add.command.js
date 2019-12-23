@@ -73,7 +73,8 @@ const createNewUserAccount = (name) => {
       }
       newAccount.accountNumber = utils.encrypt(1);
       data.accounts.push(newAccount);
-      fs.writeFile(metaData.DATA_PATH, JSON.stringify(data), (error) => {
+
+      fs.writeFileSync(metaData.DATA_PATH, JSON.stringify(data), (error) => {
         if (error) throw new Error('Error. Account not created');
         showMessage(`Account ${name} saved successfully`, 'success');
       });

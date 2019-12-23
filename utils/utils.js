@@ -33,7 +33,13 @@ function existsAccount(name) {
 function getData() {
   try {
     let metaData = getAmMetaData();
-    return require(metaData.DATA_PATH);
+    let dataPath = metaData.DATA_PATH;
+    // If the route has spaces means that has " " in the start and in the end
+    // for that it is neccessary remove " " before to pass to requiere method
+    if (dataPath[0] === '"') {
+      dataPath = dataPath.replace(/"/g, '');
+    }
+    return require(dataPath);
   } catch (error) {
     throw new Error('Error to read the data base, try again please');
   }
@@ -124,9 +130,13 @@ function generateMetaData() {
 
 function getAmMetaData() {
   try {
-    return require(AM_META_DATA);
+    let metaData = require(AM_META_DATA);
+    // el PATH para escribir y para el require no  necesita "" si el path tiene espacios
+    // para ver en los comandos si cd o cat si necesita ""
+    //metaData.DATA_PATH = getValidDataPathToWrite(metaData.DATA_PATH);
+    return metaData;
   } catch (error) {
-    throw new Error('Error to read the data base, try again please');
+    throw new Error('Error to read the meta data, try again please');
   }
 }
 
@@ -138,6 +148,7 @@ async function writeInAmMetaData(key, value) {
   });
 }
 
+// available commands cp, cat, chmod
 function getValidCommand(command) {
   let opsys = process.platform;
   let cpCommand = 'cp';
@@ -237,6 +248,15 @@ function encryptAllData() {
 }
 
 
+function getValidDataPathToWrite(path) {
+    // If the route has spaces means that has " " in the start and in the end
+    // for that it is neccessary remove " " before to pass to requiere method
+    if (path[0] === '"') {
+      return path.replace(/"/g, '');
+    }
+    return path;
+}
+
 module.exports = {
   existsAccount,
   getData,
@@ -256,5 +276,6 @@ module.exports = {
   DATA_PATH,
   DATA_FOLDER_PATH,
   DATA_PATH_PROD,
-  secretKeyCrypt
+  secretKeyCrypt,
+  getValidDataPathToWrite
 }
